@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <>
       <header id="navbar">
-        <nav className="navbar fixed-top navbar-expand-lg  p-3">
+        <nav className="navbar fixed-top navbar-expand-lg p-3">
           <div className="container d-flex align-items-center">
           <a className="navbar-brand" href="/home">
               <img
@@ -41,6 +41,14 @@ const Navbar = () => {
               </ul>
               <form className="form-inline wrap">
                 <i className="cart bi bi-cart" />
+                <button className="login btn rounded-pill">
+                  <Link
+                    style={{ color: "inherit", textDecoration: "none", fontWeight: "bold" }}
+                    to={"/admin"}
+                  >
+                    Admin
+                  </Link>
+                </button>
                 <button className="login btn rounded-pill">
                   <Link
                     style={{ color: "inherit", textDecoration: "none", fontWeight: "bold" }}
