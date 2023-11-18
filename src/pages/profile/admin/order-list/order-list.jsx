@@ -36,8 +36,7 @@ const OrderList = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/processed`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/processed`)
       .then((response) => {
         setProcessed(response.data.data);
       })
@@ -48,8 +47,7 @@ const OrderList = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/sent`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/sent`)
       .then((response) => {
         setSent(response.data.data);
       })
@@ -60,10 +58,7 @@ const OrderList = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/orders/${adminId}/completed`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/completed`)
       .then((response) => {
         setCompleted(response.data.data);
       })
@@ -85,8 +80,7 @@ const OrderList = () => {
 
   const handleProcessed = async (id) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/processed`);
+      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/processed`);
     } catch (error) {
       console.error("Error update:", error);
     }
@@ -94,9 +88,7 @@ const OrderList = () => {
 
   const handleSent = async (id) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/sent`
-      );
+      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/sent`);
     } catch (error) {
       console.error("Error update:", error);
     }
@@ -125,7 +117,6 @@ const OrderList = () => {
             {" "}
             <div style={{ padding: 30 }}>
               <h5 className="font-weight-bold">Order List</h5>
-
               <ul className="nav nav-pills mt-3" id="pills-tab" role="tablist">
                 <li className="nav-item" role="presentation">
                   <button

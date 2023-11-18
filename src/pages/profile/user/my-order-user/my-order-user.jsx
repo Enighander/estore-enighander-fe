@@ -27,11 +27,7 @@ const MyOrderUser = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/orders/user/${userId}/pending`
-      )
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/pending`)
       .then((response) => {
         setPending(response.data.data);
       })
@@ -42,11 +38,7 @@ const MyOrderUser = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/orders/user/${userId}/processed`
-      )
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/processed`)
       .then((response) => {
         setProcessed(response.data.data);
       })
@@ -58,8 +50,7 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/sent`
-      )
+        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/sent`)
       .then((response) => {
         setSent(response.data.data);
       })
@@ -71,10 +62,7 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/orders/user/${userId}/completed`
-      )
+        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/completed`)
       .then((response) => {
         setCompleted(response.data.data);
       })
@@ -86,8 +74,7 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/cancel`
-      )
+        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/cancel`)
       .then((response) => {
         setCancel(response.data.data);
       })
@@ -98,9 +85,7 @@ const MyOrderUser = () => {
 
   const handleCompleted = async (id) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/completed`
-      );
+      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/completed`);
       console.log("update successfully");
     } catch (error) {
       console.error("Error update:", error);
@@ -109,9 +94,7 @@ const MyOrderUser = () => {
 
   const handleCancel = async (id) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/cancel`
-      );
+      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/cancel`);
       console.log("update successfully");
     } catch (error) {
       console.error("Error update :", error);

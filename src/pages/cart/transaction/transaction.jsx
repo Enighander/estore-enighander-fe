@@ -19,11 +19,7 @@ const Transaction = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/orders/user/${userId}/pending`
-      )
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/pending`)
       .then((response) => {
         setOrders(response.data.data);
       })
@@ -36,8 +32,11 @@ const Transaction = () => {
     axios
       .get(`${import.meta.env.VITE_REACT_APP_API_URL}/address/${userId}`)
       .then((response) => {
-        setAddress(response.data.data);
-        setAddressId(response.data.data[0]);
+        const addresses = response.data.data;
+        setAddress(addresses); // Set fetched addresses to 'address' state
+        if (addresses.length > 0) {
+          setAddressId(addresses[0].id); // Set the ID of the first address to 'addressId'
+        }
       })
       .catch((error) => {
         console.error("Error Fetching Data:", error);
@@ -90,10 +89,9 @@ const Transaction = () => {
     try {
       await Promise.all(
         selectedOrders.map(async (orderId) => {
-          await axios.put(
-            `${import.meta.env.VITE_REACT_APP_API_URL}/${orderId}`,
+          await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${orderId}`,
             {
-              address_id: addressId.id,
+              address_id: addressId,
             }
           );
         })
@@ -152,8 +150,7 @@ const Transaction = () => {
                   </button>
                   {showModalCreate && (
                     <ModalCreate
-                      onClose={handleCloseModalCreate} // Optional: Provide a function to close the modal
-                      // Other props you may need to pass to ModalCreate
+                      onClose={handleCloseModalCreate}
                     />
                   )}
 

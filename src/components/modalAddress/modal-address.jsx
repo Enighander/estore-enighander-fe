@@ -7,8 +7,8 @@ import ModalUpdate from "../modalUpdateAddress/modal-update-address";
 const ModalAddress = () => {
   const userId = localStorage.getItem("userId");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
   const [address, setAddress] = useState([]);
+  const handleClose = () => setShow(false);
 
   const fetchAddressData = () => {
     axios
