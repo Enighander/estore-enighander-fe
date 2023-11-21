@@ -69,6 +69,14 @@ const markAsPrimary = (addressId, isPrimary) => {
                     {address.address_as}, {address.address}, {address.city},{" "}
                     {address.postal_code}
                   </p>
+              <label>
+                 Set as Primary:
+                 <input
+                  type="checkbox"
+                  checked={address.primary}
+                  onChange={() => markAsPrimary(address.id, !address.primary)}
+                 />
+              </label>
                   <ModalUpdate />
                 </div>
               </div>
