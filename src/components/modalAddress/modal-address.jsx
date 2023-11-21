@@ -21,6 +21,20 @@ const ModalAddress = () => {
       });
   };
 
+const markAsPrimary = (addressId, isPrimary) => {
+  axios
+    .put(`${import.meta.env.VITE_REACT_APP_API_URL}/address/${addressId}`, {
+      primary: isPrimary,
+    })
+    .then((response) => {
+      console.log('Address marked as primary:', response.data);
+      fetchAddressData();
+    })
+    .catch((error) => {
+      console.error("Error marking address as primary:", error);
+    });
+};
+
   useEffect(() => {
     fetchAddressData();
   }, [userId]);
