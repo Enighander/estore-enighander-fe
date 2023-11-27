@@ -173,7 +173,6 @@ const Product = () => {
                 >
                   <h6 className="login">Buy Now</h6>
                 </button>
-              </Link>
               <button
                 type="button"
                 className="btn rounded-pill bag"
@@ -181,6 +180,7 @@ const Product = () => {
               >
                 <h6 className="login">Add To Cart</h6>
               </button>
+              </Link>
             </div>
           </div>
 

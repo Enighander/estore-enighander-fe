@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SidebarAdmin from "../../../../components/sidebarAdmin/sidebarAdmin";
 import NavbarLogin from "../../../../components/navbarLogin";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const OrderList = () => {
@@ -19,78 +20,102 @@ const OrderList = () => {
         setData(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/get%20paid`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/admin/${adminId}/get%20paid`)
       .then((response) => {
         setPaid(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/processed`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/admin/${adminId}/processed`)
       .then((response) => {
         setProcessed(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/sent`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/admin/${adminId}/sent`)
       .then((response) => {
         setSent(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/completed`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/admin/${adminId}/completed`)
       .then((response) => {
         setCompleted(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
+
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${adminId}/cancel`)
+      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/admin/${adminId}/cancel`)
       .then((response) => {
         setCancel(response.data.data);
       })
       .catch((error) => {
-        console.error("Error Fetching data:", error);
+        console.error("Error fetching data:", error);
       });
   }, [adminId]);
 
+
   const handleProcessed = async (id) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/processed`);
-    } catch (error) {
-      console.error("Error update:", error);
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to processed this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      cancelButtonText: "No, cancel!",
+    });
+    if (confirmation.isConfirmed) {
+      try {
+        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/processed`);
+        console.log("update successfully");
+      } catch (error) {
+        console.error("Error update:", error);
+      }
     }
   };
 
   const handleSent = async (id) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/sent`);
-    } catch (error) {
-      console.error("Error update:", error);
+    const sending = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to sent this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      cancelButtonText: "No, cancel!",
+    });
+    if (sending.isConfirmed) {
+      try {
+        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/sent`);
+        console.log("update successfully");
+      } catch (error) {
+        console.error("Error update:", error);
+      }
     }
   };
 
@@ -250,8 +275,6 @@ const OrderList = () => {
                           </h6>
                         </div>
                       </div>
-                
-         
                     </div>
                   ))}
                 </div>

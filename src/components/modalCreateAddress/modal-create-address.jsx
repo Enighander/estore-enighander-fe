@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 const ModalCreate = ({ onClose }) => {
   const userId = localStorage.getItem("userId");
   const [show, setShow] = useState(false);
+  const [isPrimary, setIsPrimary] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [data, setData] = useState({
@@ -26,11 +27,19 @@ const ModalCreate = ({ onClose }) => {
     });
   };
 
+  const handlePrimaryChange = (e) => {
+    setIsPrimary(e.target.checked);
+  };
+
   const handleCreate = async () => {
     try {
+      const requestData = {
+        ...data,
+        is_primary: isPrimary, // Add is_primary flag to data object
+      };
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/address/${userId}`,
-        data
+        requestData
       );
       console.log("Address Create Successfully", response);
       handleClose();
@@ -58,7 +67,7 @@ const ModalCreate = ({ onClose }) => {
             padding: "0",
           }}
         >
-          <h6 style={{ color: "#9B9B9B" }}>Create New address</h6>
+          <h6 style={{ color: "#9B9B9B" }}>New address</h6>
         </div>
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton></Modal.Header>
@@ -158,6 +167,8 @@ const ModalCreate = ({ onClose }) => {
                     className="form-check-input"
                     type="checkbox"
                     id="gridCheck"
+                    onChange={handlePrimaryChange} // Handle checkbox change
+                    checked={isPrimary}
                   />
                   <label
                     className="form-check-label text-secondary"
@@ -166,6 +177,13 @@ const ModalCreate = ({ onClose }) => {
                     Make it the primary address
                   </label>
                 </div>
+              </div>
+              <div className="mt-3">
+                {isPrimary && (
+                  <p style={{ color: "green" }}>
+                    This address will be set as the primary address.
+                  </p>
+                )}
               </div>
             </form>
             <div

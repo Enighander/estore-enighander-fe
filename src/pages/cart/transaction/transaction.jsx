@@ -125,23 +125,7 @@ const Transaction = () => {
             <div className="row">
               <div className="col-md-8">
                 <div className="card mt-3 cardKiri">
-                  <div className="m-4 ">
-                    {address.length > 0 ? (
-                      address.map((item) => (
-                        <div key={item.id}>
-                          <h6>{item.recipient_name}</h6>
-                          <span>{item.phone}</span>
-                          <p>
-                            {item.address_as}, {item.address}, {item.city},{" "}
-                            {item.postal_code}
-                          </p>
-                          <ModalAddress item={item} />
-                        </div>
-                      ))
-                    ) : (
-                      <ModalAddress />
-                    )}
-                  </div>
+                  <ModalAddress />
                   <button
                     className="btn address"
                     onClick={handleToggleModalCreate}

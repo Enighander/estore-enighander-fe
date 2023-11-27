@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "../../assets/css/style.css";
 import axios from "axios";
-import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+import { SlArrowRight } from "react-icons/sl";
+// import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 
 const DiscountCard = () => {
   const [products, setProduct] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const DiscountCard = () => {
       .get(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/products?page=${currentPage}&limit=${itemsPerPage}`
+        }/products?sort=ASC&page=${currentPage}&limit=${itemsPerPage}`
       )
       .then((response) => {
         if (response.data && Array.isArray(response.data.data)) {
@@ -97,51 +99,43 @@ const DiscountCard = () => {
   };
 
   return (
-    <div className="container">
-      <div className="title" style={{ marginTop: 30, marginBottom: 30 }}>
-        <h1 style={{ fontWeight: "bold" }}>Products</h1>
-        <section style={{ color: "#9B9B9B" }}>Our Product List</section>
-      </div>
-      <div className="product-container" style={{ display: "flex" }}>
-        {products.map((product) => (
-          <div
-            className="card"
-            style={{ width: "400px", margin: "10px" }}
-            key={product.id}
-            onClick={() => handleProductClick(product.id)}
-          >
-            <img
-              className="card-img-top"
-              src={product.image}
-              alt={product.name}
-            />
-            <div className="card-body">
-              <h4 className="card-title">{product.name}</h4>
-              <p className="card-text">
-                {/* Include any additional content here. */}
-              </p>
-              <p className="card-price">
-                {" "}
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(product.price)}
-              </p>
-              <p className="card-description">{product.description}</p>
-              <p className="card-color">Color Series: {product.color}</p>
-              <a href="#" className="btn btn-primary">
-                Buy
-              </a>
-              <a href="#" className="btn btn-primary">
-                Add To Cart
-              </a>
+    <main id="discount">
+      <div className="container">
+        <div className="title">
+          <h1 style={{ fontWeight: "bold" }}>Discount Product</h1>
+          <section className="subtitle">Our Product List</section>
+        </div>
+        <div className="product-container">
+          {products.map((product) => (
+            <div
+              className="card"
+              style={{ width: "300px", margin: "5px" }}
+              key={product.id}
+            >
+              <img
+                className="card-img-top"
+                src={product.image}
+                alt={product.name}
+                onClick={() => handleProductClick(product.id)}
+              />
+              <div className="card-body">
+                <h4 className="card-title">{product.name}</h4>
+                <p className="card-description">{product.description}</p>
+                <p className="card-price">
+                  {" "}
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(product.price)}
+                </p>
+                <p className="card-color">Color Series: {product.color}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div>
+          ))}
+        </div>
+        {/* <div>
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           <GrLinkPrevious />
         </button>
@@ -149,8 +143,16 @@ const DiscountCard = () => {
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           <GrLinkNext />
         </button>
+      </div> */}
+        <div className="see-all-button">
+          <Link to={`/discount-product`}>
+            <button type="button" className="btn rounded-pill">
+              <h6><SlArrowRight /> see all</h6>
+            </button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

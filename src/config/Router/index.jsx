@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "../../pages/home/Home.jsx";
 import Register from "../../pages/auth/register.jsx";
 import Login from "../../pages/auth/login.jsx";
-import NewProduct from "../../pages/newProduct 1/newProduct.jsx";
+import NewProduct from "../../pages/newProduct/newProduct.jsx";
 import Cart from "../../pages/cart/cart.jsx";
 import Product from "../../pages/detailProduct/detailProduct.jsx";
 import Profile from "../../pages/profile/profile.jsx";
@@ -18,6 +18,7 @@ import ProductList from "../../pages/profile/admin/product-list/product-list.jsx
 import UpdateProduct from "../../pages/profile/admin/product-list/update-product/update-product.jsx";
 import OrderList from "../../pages/profile/admin/order-list/order-list.jsx";
 import MyOrderUser from "../../pages/profile/user/my-order-user/my-order-user.jsx";
+import DiscountProduct from "../../pages/discountProduct/discountProduct.jsx";
 
 const Router = () => {
   return (
@@ -29,7 +30,8 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/newproduct" element={<NewProduct />} />
+          <Route path="/new-product" element={<NewProduct />} />
+          <Route path="/discount-product" element={<DiscountProduct />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/products/categories/:id" element={<Category />} />

@@ -1,7 +1,8 @@
+import Swal from "sweetalert2";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NavbarLogin from "../../../../components/navbarLogin";
 import SidebarUser from "../../../../components/sidebarUser/sidebarUser";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 const MyOrderUser = () => {
@@ -27,7 +28,11 @@ const MyOrderUser = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/pending`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/orders/user/${userId}/pending`
+      )
       .then((response) => {
         setPending(response.data.data);
       })
@@ -38,7 +43,11 @@ const MyOrderUser = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/processed`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/orders/user/${userId}/processed`
+      )
       .then((response) => {
         setProcessed(response.data.data);
       })
@@ -50,7 +59,8 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/sent`)
+        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/sent`
+      )
       .then((response) => {
         setSent(response.data.data);
       })
@@ -62,7 +72,10 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/completed`)
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/orders/user/${userId}/complete`
+      )
       .then((response) => {
         setCompleted(response.data.data);
       })
@@ -74,7 +87,8 @@ const MyOrderUser = () => {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/cancel`)
+        `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user/${userId}/cancel`
+      )
       .then((response) => {
         setCancel(response.data.data);
       })
@@ -84,20 +98,44 @@ const MyOrderUser = () => {
   }, [userId]);
 
   const handleCompleted = async (id) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/completed`);
-      console.log("update successfully");
-    } catch (error) {
-      console.error("Error update:", error);
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to complete this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      cancelButtonText: "No, cancel!",
+    });
+    if (confirmation.isConfirmed) {
+      try {
+        await axios.put(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/complete`
+        );
+        console.log("update successfully");
+      } catch (error) {
+        console.error("Error update:", error);
+      }
     }
   };
 
   const handleCancel = async (id) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/cancel`);
-      console.log("update successfully");
-    } catch (error) {
-      console.error("Error update :", error);
+    const cancel = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to complete this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      cancelButtonText: "No, cancel!",
+    });
+    if (cancel.isConfirmed) {
+      try {
+        await axios.put(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/orders/${id}/cancel`
+        );
+        console.log("update successfully");
+      } catch (error) {
+        console.error("Error update :", error);
+      }
     }
   };
 
@@ -124,7 +162,6 @@ const MyOrderUser = () => {
             {" "}
             <div style={{ padding: 30 }}>
               <h5 className="font-weight-bold">My order</h5>
-
               <ul className="nav nav-pills mt-3" id="pills-tab" role="tablist">
                 <li className="nav-item" role="presentation">
                   <button

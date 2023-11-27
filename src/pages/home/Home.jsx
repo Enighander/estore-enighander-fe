@@ -4,7 +4,7 @@ import NavbarLogin from "../../components/navbarLogin/index.jsx";
 import CarouselComponent from "../../components/carousel/carousel.jsx";
 import CategoryComponent from "../../components/category/category.jsx";
 import CardComponent from "../../components/card/card.jsx";
-import DiscountCard from "../../components/discountCard/popularCard.jsx";
+import DiscountCard from "../../components/discountCard/discountCard.jsx";
 
 const Home = () => {
   const [showNavbarLogin, setShowNavbarLogin] = useState(false);

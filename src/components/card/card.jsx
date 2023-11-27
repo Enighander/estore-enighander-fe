@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import "../../assets/css/style.css";
 import axios from "axios";
+import { SlArrowRight } from "react-icons/sl";
+// import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
 const CardComponent = () => {
   const [products, setProduct] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(
-        `${
+      .get(`${
           import.meta.env.VITE_REACT_APP_API_URL
         }/products?sort=DESC&page=${currentPage}&limit=${itemsPerPage}`
       )
@@ -55,7 +56,6 @@ const CardComponent = () => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(
@@ -69,7 +69,6 @@ const CardComponent = () => {
         );
       }
     } else {
-      // Display "1, 2, 3, 4, ..." when there are many pages
       for (let i = 1; i <= 4; i++) {
         pageNumbers.push(
           <button
@@ -97,59 +96,62 @@ const CardComponent = () => {
   };
 
   return (
-    <div className="container">
-      <div className="title" style={{ marginTop: 30, marginBottom: 30 }}>
-        <h1 style={{ fontWeight: "bold" }}>New Products</h1>
-        <section style={{ color: "#9B9B9B" }}>
-          New Coming Products This Weeks
-        </section>
-      </div>
-      <div className="product-container" style={{ display: "flex" }}>
-        {products.map((product) => (
-          <div
-            className="card"
-            style={{ width: "400px", margin: "10px" }}
-            key={product.id}
-            onClick={() => handleProductClick(product.id)}
-          >
-            <img
-              className="card-img-top"
-              src={product.image}
-              alt={product.name}
-            />
-            <div className="card-body">
-              <h4 className="card-title">{product.name}</h4>
-              <p className="card-description">{product.description}</p>
-              <p className="card-price">
-                {" "}
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(product.price)}
-              </p>
-              <p className="card-color">Color Series: {product.color}</p>
-              <div className="card-buttons">
-                <a href="#" className="btn btn-primary">
-                  Buy
-                </a>
-                <a href="#" className="btn btn-primary">
-                  Add To Cart
-                </a>
+    <main id="card">
+      <div className="container">
+        <div className="title">
+          <h1 className="title-text">New Products</h1>
+          <section className="subtitle">New Coming Products This Week</section>
+        </div>
+        <div className="product-container">
+          {products.map((product) => (
+            <div
+              className="card"
+              style={{ width: "300px", margin: "5px" }}
+              key={product.id}
+            >
+              <img
+                className="card-img-top"
+                src={product.image}
+                alt={product.name}
+                onClick={() => handleProductClick(product.id)}
+              />
+              <div className="card-body">
+                <h4 className="card-title">{product.name}</h4>
+                <p className="card-description">{product.description}</p>
+                <p className="card-price">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(product.price)}
+                </p>
+                <p className="card-color">Color Series: {product.color}</p>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {/* <div className="pagination">
+          <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+            <GrLinkPrevious />
+          </button>
+          {renderPageNumbers()}
+          <button
+            onClick={handleNextpage}
+            disabled={currentPage === totalPages}
+          >
+            <GrLinkNext />
+          </button>
+        </div> */}
+        <div className="see-all-button">
+          <Link to={`/new-product`}>
+            <button type="button" className="btn rounded-pill">
+              <h6><SlArrowRight /> see all </h6>
+            </button>
+          </Link>
+        </div>
       </div>
-      <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-        <GrLinkPrevious />
-      </button>
-      {renderPageNumbers()}
-      <button onClick={handleNextpage} disabled={currentPage === totalPages}>
-        <GrLinkNext />
-      </button>
-    </div>
+    </main>
   );
 };
 
